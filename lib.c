@@ -309,4 +309,119 @@ void updateBook() {
 
     printf("Book updated successfully.\n");
 }
+// Delete a book
+void deleteBook() {
+    if (bookCount == 0) {
+        printf("No books available to delete.\n");
+        return;
+    }
+    int id;
+    printf("Enter Book ID to delete: ");
+    scanf("%d", &id);
+    clearInputBuffer();
+
+    int idx = -1;
+    for (int i = 0; i < bookCount; i++) {
+        if (books[i].bookID == id) {
+            idx = i;
+            break;
+        }
+    }
+    if (idx == -1) {
+        printf("Book not found.\n");
+        return;
+    }
+
+    // Shift remaining books
+    for (int i = idx; i < bookCount - 1; i++) {
+        books[i] = books[i + 1];
+    }
+    bookCount--;
+
+    printf("Book deleted successfully.\n");
+}
+
+// Add member
+void addMember() {
+    if (memberCount >= MAX_MEMBERS) {
+        printf("Member limit reached. Cannot add more.\n");
+        return;
+    }
+    Member m;
+    printf("Enter Member ID (integer): ");
+    scanf("%d", &m.memberID);
+    clearInputBuffer();
+
+    // Check duplicate
+    for (int i = 0; i < memberCount; i++) {
+        if (members[i].memberID == m.memberID) {
+            printf("Member ID already exists.\n");
+            return;
+        }
+    }
+
+    printf("Enter Member Name: ");
+    fgets(m.name, sizeof(m.name), stdin);
+    m.name[strcspn(m.name, "\n")] = 0;
+
+    printf("Enter Phone Number: ");
+    fgets(m.phone, sizeof(m.phone), stdin);
+    m.phone[strcspn(m.phone, "\n")] = 0;
+
+    members[memberCount++] = m;
+    printf("Member added successfully.\n");
+}
+
+// View all members
+void viewMembers() {
+    if (memberCount == 0) {
+        printf("No members available.\n");
+        return;
+    }
+    printf("\n%-10s %-30s %-15s\n", "Member ID", "Name", "Phone");
+    printf("-----------------------------------------------\n");
+    for (int i = 0; i < memberCount; i++) {
+        printf("%-10d %-30s %-15s\n", members[i].memberID, members[i].name, members[i].phone);
+    }
+}
+
+// Search member by name
+void searchMember() {
+    if (memberCount == 0) {
+        printf("No members available.\n");
+        return;
+    }
+    char keyword[50];
+    printf("Enter keyword to search member by name: ");
+    fgets(keyword, sizeof(keyword), stdin);
+    keyword[strcspn(keyword, "\n")] = 0;
+
+    int found = 0;
+    printf("\nSearch Results:\n");
+    printf("%-10s %-30s %-15s\n", "Member ID", "Name", "Phone");
+    printf("-----------------------------------------------\n");
+    for (int i = 0; i < memberCount; i++) {
+        if (strstr(members[i].name, keyword) != NULL) {
+            printf("%-10d %-30s %-15s\n", members[i].memberID, members[i].name, members[i].phone);
+            found++;
+        }
+    }
+    if (!found) {
+        printf("No matching members found.\n");
+    }
+}
+
+// Issue a book to a member
+void issueBook() {
+    if (issueCount >= 1000) {
+        printf("Issue records full.\n");
+        return;
+    }
+    int bookID, memberID;
+
+    printf("Enter Book ID to issue: ");
+    scanf("%d", &bookID);
+    printf("Enter Member ID: ");
+    scanf("%d", &memberID);
+    clearInputBuffer();
 
