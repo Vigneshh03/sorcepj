@@ -424,4 +424,53 @@ void issueBook() {
     printf("Enter Member ID: ");
     scanf("%d", &memberID);
     clearInputBuffer();
+ int idx = -1;
+    for (int i = 0; i < issueCount; i++) {
+        if (issues[i].issueID == issueID) {
+            idx = i;
+            break;
+        }
+    }
+    if (idx == -1) {
+        printf("Issue record not found.\n");
+        return;
+    }
+    if (issues[idx].returned == 1) {
+        printf("This book is already returned.\n");
+        return;
+    }
+
+    // Mark as returned
+    issues[idx].returned = 1;
+
+    // Increase copies available in book
+    for (int i = 0; i < bookCount; i++) {
+        if (books[i].bookID == issues[idx].bookID) {
+            books[i].copiesAvailable++;
+            break;
+        }
+    }
+
+    printf("Book returned successfully.\n");
+}
+
+// View all issue records
+void viewIssues() {
+    if (issueCount == 0) {
+        printf("No issues records available.\n");
+        return;
+    }
+    printf("\n%-8s %-8s %-8s %-12s %-12s %-8s\n", "IssueID", "BookID", "MemberID", "Issue Date", "Return Date", "Returned");
+    printf("-------------------------------------------------------------------\n");
+    for (int i = 0; i < issueCount; i++) {
+        printf("%-8d %-8d %-8d %-12s %-12s %-8s\n",
+            issues[i].issueID,
+            issues[i].bookID,
+            issues[i].memberID,
+            issues[i].issueDate,
+            issues[i].returnDate,
+            issues[i].returned ? "Yes" : "No");
+    }
+}
+
 
