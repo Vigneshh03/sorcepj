@@ -472,5 +472,78 @@ void viewIssues() {
             issues[i].returned ? "Yes" : "No");
     }
 }
+// Main menu
+void mainMenu() {
+    int choice;
+    do {
+        system("clear||cls");  // clear console for Windows or Unix
+        printf("====== Library Management System ======\n");
+        printf("1. Book Management\n");
+        printf("2. Member Management\n");
+        printf("3. Issue/Return Books\n");
+        printf("4. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+        clearInputBuffer();
+
+        switch (choice) {
+            case 1:
+                bookMenu();
+                break;
+            case 2:
+                memberMenu();
+                break;
+            case 3:
+                issueMenu();
+                break;
+            case 4:
+                break;
+            default:
+                printf("Invalid choice.\n");
+                pressEnterToContinue();
+        }
+    } while (choice != 4);
+}
+
+// Book management menu
+void bookMenu() {
+    int choice;
+    do {
+        system("clear||cls");
+        printf("=== Book Management ===\n");
+        printf("1. Add Book\n");
+        printf("2. View Books\n");
+        printf("3. Search Book\n");
+        printf("4. Update Book\n");
+        printf("5. Delete Book\n");
+        printf("6. Back to Main Menu\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+        clearInputBuffer();
+
+        switch (choice) {
+            case 1:
+                addBook();
+                pressEnterToContinue();
+                break;
+            case 2:
+                viewBooks();
+                pressEnterToContinue();
+                break;
+            case 3:
+                searchBook();
+                pressEnterToContinue();
+                break;
+            case 4:
+                updateBook();
+                pressEnterToContinue();
+                break;
+            case 5:
+                deleteBook();
+                pressEnterToContinue();
+                break;
+            case 6:
+                break;
+            default:
 
 
